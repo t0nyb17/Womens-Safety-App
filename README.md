@@ -7,7 +7,7 @@ A modern, comprehensive **Flutter application** designed to enhance women's safe
 ## 👨‍💻 Developer
 
 **Tanmay Bangar**\
-GitHub: [tanmaybangar](https://github.com/tanmaybangar)
+GitHub: https://github.com/t0nyb17
 
 ---
 
