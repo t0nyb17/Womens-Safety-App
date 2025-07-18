@@ -1,4 +1,4 @@
-Women's Safety App 🛡️
+#Women's Safety App 🛡️
 A comprehensive Flutter application designed to enhance women's safety through quick access to emergency features and safety resources.
 👨‍💻 Developer
 Tanmay Bangar
@@ -7,7 +7,7 @@ GitHub: https://github.com/tanmaybangar
 
 ✨ Features
 🚨 SOS Alert System
-<img <img width="1920" height="1080" alt="Screenshot (1671)" src="https://github.com/user-attachments/assets/37463d51-ffc5-4b71-bf17-ec7ffa136272" />
+<img width="1920" height="1080" alt="Screenshot (1671)" src="https://github.com/user-attachments/assets/37463d51-ffc5-4b71-bf17-ec7ffa136272" />
 <img width="1920" height="1080" alt="Screenshot (1670)" src="https://github.com/user-attachments/assets/65087a41-70d9-46c5-85cf-b6d07e4a0839" />
 w<img wid<img width="1920" height="1080" alt="Screenshot (1684)" src="https://github.com/user-attachments/assets/1d5c6d25-b6cf-41bd-8a64-9c29c9a87046" />
 <img width="1920" height="1080" alt="Screenshot (1683)" src="https://github.com/user-attachments/assets/0e16ff8a-8816-4e92-a56e-32ad7c1baa5a" />
