@@ -185,20 +185,6 @@ Contributions are welcome!\
 
 ---
 
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-## 🙏 Acknowledgements
-
-- Flutter team
-- Open-source contributors
-- Material Design resources
-
----
-
 ## 🌟 Future Roadmap
 
 - Voice-activated SOS
@@ -219,6 +205,7 @@ If you like this project, consider giving it a ⭐️!
 
 ---
 
-Made with ❤️ by **Tanmay Bangar**\
+Made by **Tanmay Bangar**\
+https://github.com/t0nyb17
 **Stay Safe. Stay Empowered.** 💪
 
