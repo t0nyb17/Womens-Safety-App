@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Primary colors
-  static const Color primaryPink = Color(0xFFFFC0CB);
-  static const Color buttonColor = Color(0xFFB83C5E);
-  static const Color darkText = Color(0xFF6D2940);
-  
-  // SOS button colors
-  static const Color sosRed = Color(0xFFE74C3C);
-  static const Color sosDarkRed = Color(0xFFC0392B);
-  
-  // Additional colors
-  static const Color cardBackground = Colors.white;
+  // Backgrounds
+  static const Color background = Color(0xFFF8F5F7);
+  static const Color surface = Color(0xFFFFFFFF);
+  static const Color surfaceVariant = Color(0xFFF2EEF2);
+
+  // Brand / Primary
+  static const Color primary = Color(0xFF8B1A4A);
+  static const Color primaryDark = Color(0xFF5C0F30);
+  static const Color primaryLight = Color(0xFFB5396E);
+  static const Color primaryFaint = Color(0xFFFAEEF3);
+
+  // SOS / Emergency
+  static const Color sosRed = Color(0xFFD32F2F);
+  static const Color sosDark = Color(0xFF9A0007);
+  static const Color sosGlow = Color(0xFFEF5350);
+
+  // Text
+  static const Color textPrimary = Color(0xFF1A1A2E);
+  static const Color textSecondary = Color(0xFF5A5A7A);
+  static const Color textHint = Color(0xFFB0B0C8);
+
+  // Status
+  static const Color success = Color(0xFF2E7D32);
+  static const Color error = Color(0xFFC62828);
+  static const Color warning = Color(0xFFE65100);
+  static const Color info = Color(0xFF1565C0);
+
+  // Legacy aliases (kept for files that reference them)
+  static const Color primaryPink = Color(0xFFF8F5F7);
+  static const Color buttonColor = Color(0xFF8B1A4A);
+  static const Color darkText = Color(0xFF1A1A2E);
+  static const Color cardBackground = Color(0xFFFFFFFF);
   static const Color shadowColor = Colors.black12;
-  static const Color successGreen = Colors.green;
-  static const Color errorRed = Colors.red;
-  static const Color warningOrange = Colors.orange;
+  static const Color successGreen = Color(0xFF2E7D32);
+  static const Color errorRed = Color(0xFFC62828);
+  static const Color warningOrange = Color(0xFFE65100);
+  static const Color textSecondaryAlias = Color(0xFF5A5A7A);
 }

@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../utils/colors.dart';
 import '../utils/constants.dart';
+import 'fake_call_screen.dart';
+import 'safe_walk_screen.dart';
+import 'report_screen.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -10,118 +13,166 @@ class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryPink,
-      appBar: AppBar(
-        title: const Text('More'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          _buildSection(
-            title: 'App Info',
-            children: [
-              _buildInfoTile(
-                icon: Icons.info_outline,
-                title: 'Version',
-                subtitle: AppConstants.appVersion,
-              ),
-              _buildInfoTile(
-                icon: Icons.developer_mode,
-                title: 'Developer',
-                subtitle: AppConstants.developerName,
-              ),
-            ],
+      backgroundColor: AppColors.background,
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: _buildProfileHeader(),
           ),
-          const SizedBox(height: 20),
-          _buildSection(
-            title: 'Features',
-            children: [
-              _buildFeatureTile(
-                icon: Icons.emergency,
-                title: 'SOS Alert',
-                description: 'One-tap emergency alert system',
-              ),
-              _buildFeatureTile(
-                icon: Icons.location_on,
-                title: 'Live Location Sharing',
-                description: 'Share your location instantly',
-              ),
-              _buildFeatureTile(
-                icon: Icons.contacts,
-                title: 'Emergency Contacts',
-                description: 'Quick access to trusted contacts',
-              ),
-              _buildFeatureTile(
-                icon: Icons.tips_and_updates,
-                title: 'Safety Tips',
-                description: 'Essential safety guidelines',
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          _buildSection(
-            title: 'Connect',
-            children: [
-              ListTile(
-                leading: const Icon(Icons.code, color: AppColors.darkText),
-                title: const Text('GitHub'),
-                subtitle: const Text('View source code'),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () async {
-                  await launchUrl(Uri.parse(AppConstants.githubUrl));
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          _buildSection(
-            title: 'Legal',
-            children: [
-              ListTile(
-                leading: const Icon(Icons.privacy_tip, color: AppColors.darkText),
-                title: const Text('Privacy Policy'),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () {
-                  _showPrivacyPolicy(context);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.description, color: AppColors.darkText),
-                title: const Text('Terms of Service'),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                onTap: () {
-                  _showTermsOfService(context);
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ElevatedButton(
-              onPressed: () => _showExitDialog(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+            sliver: SliverToBoxAdapter(
+              child: Column(
                 children: [
-                  Icon(Icons.exit_to_app, color: Colors.white),
-                  SizedBox(width: 10),
-                  Text(
-                    'Exit App',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  _buildSection(
+                    title: 'App Features',
+                    children: [
+                      _buildFeatureRow(
+                          icon: Icons.shield_rounded,
+                          color: AppColors.sosRed,
+                          title: 'SOS Alert',
+                          subtitle: 'One-tap emergency alert'),
+                      _buildFeatureRow(
+                          icon: Icons.location_on_rounded,
+                          color: const Color(0xFF1565C0),
+                          title: 'Live Location',
+                          subtitle: 'Share GPS via WhatsApp, SMS, Email'),
+                      _buildFeatureRow(
+                          icon: Icons.phone_in_talk_rounded,
+                          color: const Color(0xFF2E7D32),
+                          title: 'Fake Call',
+                          subtitle: 'Simulate an incoming call'),
+                      _buildFeatureRow(
+                          icon: Icons.timer_rounded,
+                          color: const Color(0xFFBF360C),
+                          title: 'Safe Walk',
+                          subtitle: 'Auto-SOS countdown timer'),
+                      _buildFeatureRow(
+                          icon: Icons.contacts_rounded,
+                          color: const Color(0xFF4A148C),
+                          title: 'Emergency Contacts',
+                          subtitle: 'Quick access to trusted people',
+                          isLast: true),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  _buildSection(
+                    title: 'App Info',
+                    children: [
+                      _buildInfoRow(label: 'Version', value: AppConstants.appVersion),
+                      _buildInfoRow(label: 'Developer', value: AppConstants.developerName, isLast: true),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  _buildSection(
+                    title: 'Help & Support',
+                    children: [
+                      _buildTappableRow(
+                        icon: Icons.bug_report_outlined,
+                        title: 'Report an Issue',
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const ReportScreen())),
+                      ),
+                      _buildTappableRow(
+                        icon: Icons.phone_in_talk_rounded,
+                        title: 'Fake Call',
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const FakeCallScreen())),
+                      ),
+                      _buildTappableRow(
+                        icon: Icons.timer_rounded,
+                        title: 'Safe Walk Timer',
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const SafeWalkScreen())),
+                      ),
+                      _buildTappableRow(
+                        icon: Icons.code_rounded,
+                        title: 'View Source on GitHub',
+                        onTap: () => launchUrl(Uri.parse(AppConstants.githubUrl)),
+                      ),
+                      _buildTappableRow(
+                        icon: Icons.privacy_tip_outlined,
+                        title: 'Privacy Policy',
+                        onTap: () => _showInfoDialog(context, 'Privacy Policy',
+                            'We collect location data only when you explicitly share it.\n\nYour emergency contacts are stored locally on your device.\n\nWe do not share your data with third parties.\n\nLast updated: 2025'),
+                      ),
+                      _buildTappableRow(
+                        icon: Icons.description_outlined,
+                        title: 'Terms of Service',
+                        onTap: () => _showInfoDialog(context, 'Terms of Service',
+                            'This app is for emergency safety purposes.\n\nPlease provide accurate emergency contact information.\n\nThe developer is not liable for missed alerts due to device or network issues.'),
+                        isLast: true,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 28),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: OutlinedButton.icon(
+                      onPressed: () => _showExitDialog(context),
+                      icon: const Icon(Icons.logout_rounded, size: 18),
+                      label: const Text('Exit App'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.error,
+                        side: BorderSide(color: AppColors.error.withOpacity(0.4)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 20),
         ],
+      ),
+    );
+  }
+
+  Widget _buildProfileHeader() {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [AppColors.primaryDark, AppColors.primary],
+        ),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(32),
+          bottomRight: Radius.circular(32),
+        ),
+      ),
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+          child: Row(
+            children: [
+              Container(
+                width: 64,
+                height: 64,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 32),
+              ),
+              const SizedBox(width: 16),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('SafeHer',
+                      style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700)),
+                  SizedBox(height: 4),
+                  Text('Your safety, our priority',
+                      style: TextStyle(color: Colors.white60, fontSize: 13)),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -131,19 +182,19 @@ class MoreScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 16, bottom: 8),
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.darkText,
-            ),
-          ),
+          padding: const EdgeInsets.only(left: 4, bottom: 10),
+          child: Text(title,
+              style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textSecondary,
+                  letterSpacing: 0.5)),
         ),
-        Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: Colors.grey.shade100),
           ),
           child: Column(children: children),
         ),
@@ -151,84 +202,80 @@ class MoreScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoTile({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
-    return ListTile(
-      leading: Icon(icon, color: AppColors.darkText),
-      title: Text(title),
-      subtitle: Text(subtitle),
-    );
-  }
-
-  Widget _buildFeatureTile({
-    required IconData icon,
-    required String title,
-    required String description,
-  }) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundColor: AppColors.buttonColor.withOpacity(0.1),
-        child: Icon(icon, color: AppColors.buttonColor),
-      ),
-      title: Text(
-        title,
-        style: const TextStyle(fontWeight: FontWeight.w500),
-      ),
-      subtitle: Text(
-        description,
-        style: const TextStyle(fontSize: 12),
-      ),
-    );
-  }
-
-  void _showPrivacyPolicy(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Privacy Policy'),
-        content: const SingleChildScrollView(
-          child: Text(
-            'Women\'s Safety App Privacy Policy\n\n'
-            '1. We collect location data only when you explicitly share your location.\n'
-            '2. Your emergency contacts are stored locally on your device.\n'
-            '3. We do not share your personal data with third parties.\n'
-            '4. We do not steal your information or impersonate.\n'
-            '5. You can exit the app by tapping the exit button.\n'
-            '5. Created the app for Womens Safety under development.\n'
-            'Last updated: 2025',
+  Widget _buildFeatureRow({required IconData icon, required Color color, required String title, required String subtitle, bool isLast = false}) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            children: [
+              Container(
+                width: 38, height: 38,
+                decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
+                child: Icon(icon, color: color, size: 20),
+              ),
+              const SizedBox(width: 14),
+              Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+                Text(subtitle, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+              ])),
+            ],
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
+        if (!isLast) Divider(height: 1, indent: 68, endIndent: 16, color: Colors.grey.shade100),
+      ],
     );
   }
 
-  void _showTermsOfService(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Terms of Service'),
-        content: const SingleChildScrollView(
-          child: Text(
-            'Terms of Service\n\n'
-            '1. This app is provided for emergency safety purposes.\n'
-            '2. Users must provide accurate emergency contact information.\n',
+  Widget _buildInfoRow({required String label, required String value, bool isLast = false}) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(label, style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
+              Text(value, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textPrimary)),
+            ],
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+        if (!isLast) Divider(height: 1, color: Colors.grey.shade100),
+      ],
+    );
+  }
+
+  Widget _buildTappableRow({required IconData icon, required String title, required VoidCallback onTap, bool isLast = false}) {
+    return Column(
+      children: [
+        InkWell(
+          onTap: onTap,
+          borderRadius: isLast ? const BorderRadius.vertical(bottom: Radius.circular(18)) : BorderRadius.zero,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              children: [
+                Icon(icon, size: 20, color: AppColors.primary),
+                const SizedBox(width: 14),
+                Expanded(child: Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.textPrimary))),
+                Icon(Icons.chevron_right_rounded, size: 18, color: AppColors.textHint),
+              ],
+            ),
           ),
-        ],
+        ),
+        if (!isLast) Divider(height: 1, indent: 50, color: Colors.grey.shade100),
+      ],
+    );
+  }
+
+  void _showInfoDialog(BuildContext context, String title, String content) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
+        content: SingleChildScrollView(child: Text(content, style: TextStyle(fontSize: 13, color: AppColors.textSecondary, height: 1.5))),
+        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close'))],
       ),
     );
   }
@@ -236,23 +283,13 @@ class MoreScreen extends StatelessWidget {
   void _showExitDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Exit App'),
-        content: const Text('Are you sure you want to exit the app?'),
+      builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text('Exit App?', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
+        content: const Text('Are you sure you want to exit SafeHer?'),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              SystemNavigator.pop();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: const Text('Exit'),
-          ),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel', style: TextStyle(color: AppColors.textSecondary))),
+          ElevatedButton(onPressed: SystemNavigator.pop, style: ElevatedButton.styleFrom(backgroundColor: AppColors.error), child: const Text('Exit', style: TextStyle(color: Colors.white))),
         ],
       ),
     );

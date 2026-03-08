@@ -9,13 +9,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
-  # Core dependencies
+
+  # Core
   url_launcher: ^6.1.14
   geolocator: ^10.1.0
   permission_handler: ^11.0.1
-  
-  # UI dependencies
+
+  # Direct call & SMS without user dialog
+  telephony: ^0.2.0
+  flutter_phone_direct_caller: ^2.1.1
+
+  # UI
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

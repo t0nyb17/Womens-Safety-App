@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../utils/colors.dart';
 
@@ -16,49 +15,45 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0.0, end: 1.0),
-      duration: const Duration(milliseconds: 500),
-      builder: (context, value, child) {
-        return Transform.scale(
-          scale: value,
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: BorderRadius.circular(15),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    return Material(
+      color: AppColors.surface,
+      borderRadius: BorderRadius.circular(18),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(18),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: Colors.grey.shade100),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.buttonColor,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.buttonColor.withOpacity(0.3),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
+                  color: AppColors.primaryFaint,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                child: Row(
-                  children: [
-                    Icon(icon, color: Colors.white, size: 28),
-                    const SizedBox(width: 20),
-                    Text(
-                      text,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+                child: Icon(icon, color: AppColors.primary, size: 22),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  text,
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
+              const Icon(Icons.chevron_right_rounded,
+                  size: 20, color: AppColors.textHint),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
