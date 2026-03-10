@@ -6,6 +6,7 @@ import '../utils/constants.dart';
 import 'fake_call_screen.dart';
 import 'safe_walk_screen.dart';
 import 'report_screen.dart';
+import 'terms_screen.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -97,10 +98,10 @@ class MoreScreen extends StatelessWidget {
                             'We collect location data only when you explicitly share it.\n\nYour emergency contacts are stored locally on your device.\n\nWe do not share your data with third parties.\n\nLast updated: 2025'),
                       ),
                       _buildTappableRow(
-                        icon: Icons.description_outlined,
-                        title: 'Terms of Service',
-                        onTap: () => _showInfoDialog(context, 'Terms of Service',
-                            'This app is for emergency safety purposes.\n\nPlease provide accurate emergency contact information.\n\nThe developer is not liable for missed alerts due to device or network issues.'),
+                        icon: Icons.gavel_rounded,
+                        title: 'Terms & Conditions',
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const TermsScreen())),
                         isLast: true,
                       ),
                     ],
@@ -137,7 +138,12 @@ class MoreScreen extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.primaryDark, AppColors.primary],
+          colors: [
+            Color(0xFF7A0A2E),
+            Color(0xFFC90F47),
+            Color(0xFFE03060),
+          ],
+          stops: [0.0, 0.6, 1.0],
         ),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(32),
@@ -147,27 +153,43 @@ class MoreScreen extends StatelessWidget {
       child: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+          padding: const EdgeInsets.fromLTRB(24, 20, 24, 28),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 64,
-                height: 64,
+                width: 58,
+                height: 58,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(18),
+                  color: Colors.white.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 32),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
               const SizedBox(width: 16),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('SafeHer',
-                      style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700)),
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text(
+                    'Safely',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                   SizedBox(height: 4),
-                  Text('Your safety, our priority',
-                      style: TextStyle(color: Colors.white60, fontSize: 13)),
+                  Text(
+                    "Women's Safety App",
+                    style: TextStyle(color: Colors.white60, fontSize: 13),
+                  ),
                 ],
               ),
             ],
@@ -286,7 +308,7 @@ class MoreScreen extends StatelessWidget {
       builder: (_) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text('Exit App?', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700)),
-        content: const Text('Are you sure you want to exit SafeHer?'),
+        content: const Text('Are you sure you want to exit Safely?'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel', style: TextStyle(color: AppColors.textSecondary))),
           ElevatedButton(onPressed: SystemNavigator.pop, style: ElevatedButton.styleFrom(backgroundColor: AppColors.error), child: const Text('Exit', style: TextStyle(color: Colors.white))),

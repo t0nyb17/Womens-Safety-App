@@ -6,11 +6,11 @@ class AppColors {
   static const Color surface = Color(0xFFFFFFFF);
   static const Color surfaceVariant = Color(0xFFF2EEF2);
 
-  // Brand / Primary
-  static const Color primary = Color(0xFF8B1A4A);
-  static const Color primaryDark = Color(0xFF5C0F30);
-  static const Color primaryLight = Color(0xFFB5396E);
-  static const Color primaryFaint = Color(0xFFFAEEF3);
+  // Brand
+  static const Color primary = Color(0xFFC90F47);
+  static const Color primaryDark = Color(0xFF8B0A30);
+  static const Color primaryLight = Color(0xFFE8356A);
+  static const Color primaryFaint = Color(0xFFFCE8EF);
 
   // SOS / Emergency
   static const Color sosRed = Color(0xFFD32F2F);
@@ -28,9 +28,9 @@ class AppColors {
   static const Color warning = Color(0xFFE65100);
   static const Color info = Color(0xFF1565C0);
 
-  // Legacy aliases (kept for files that reference them)
+  // Legacy aliases
   static const Color primaryPink = Color(0xFFF8F5F7);
-  static const Color buttonColor = Color(0xFF8B1A4A);
+  static const Color buttonColor = Color(0xFFC90F47);
   static const Color darkText = Color(0xFF1A1A2E);
   static const Color cardBackground = Color(0xFFFFFFFF);
   static const Color shadowColor = Colors.black12;

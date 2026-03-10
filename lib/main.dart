@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'screens/splash_screen.dart';
+import 'screens/main_screen.dart';
+import 'screens/terms_screen.dart';
 import 'utils/colors.dart';
+import 'utils/terms_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
     ),
   );
   runApp(const WomenSafetyApp());
@@ -20,7 +22,7 @@ class WomenSafetyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SafeHer',
+      title: 'Safely',
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
@@ -86,7 +88,19 @@ class WomenSafetyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: FutureBuilder<bool>(
+        future: TermsService.hasAccepted(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return snapshot.data == true
+              ? const MainScreen()
+              : const TermsScreen();
+        },
+      ),
     );
   }
 }

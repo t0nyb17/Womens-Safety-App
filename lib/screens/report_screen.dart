@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../utils/colors.dart';
 
 class ReportScreen extends StatefulWidget {
@@ -82,8 +83,13 @@ class _ReportScreenState extends State<ReportScreen> {
                     TextFormField(
                       controller: _descriptionController,
                       maxLines: 7,
-                      decoration: const InputDecoration(hintText: 'Describe your issue or suggestion...', alignLabelWithHint: true),
-                      validator: (value) => (value == null || value.trim().isEmpty) ? 'Please enter a description' : null,
+                      decoration: const InputDecoration(
+                          hintText: 'Describe your issue or suggestion...',
+                          alignLabelWithHint: true),
+                      validator: (value) =>
+                          (value == null || value.trim().isEmpty)
+                              ? 'Please enter a description'
+                              : null,
                     ),
                     const SizedBox(height: 32),
                     SizedBox(
@@ -91,8 +97,12 @@ class _ReportScreenState extends State<ReportScreen> {
                       height: 54,
                       child: ElevatedButton(
                         onPressed: _submitReport,
-                        style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
-                        child: const Text('Submit Report', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16))),
+                        child: const Text('Submit Report',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600)),
                       ),
                     ),
                   ],
@@ -105,13 +115,28 @@ class _ReportScreenState extends State<ReportScreen> {
     );
   }
 
-  void _submitReport() {
+  Future<void> _submitReport() async {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Report submitted — thank you!'), backgroundColor: AppColors.success),
+      final subject =
+          Uri.encodeComponent('[SafeAura] $_reportType Report');
+      final body = Uri.encodeComponent(
+        'Report Type: $_reportType\n\n${_descriptionController.text.trim()}\n\n-- Sent via SafeAura App',
       );
-      _descriptionController.clear();
-      setState(() => _reportType = 'Bug');
+      final mailUri = Uri.parse(
+          'mailto:tnmybngrwork@gmail.com?subject=$subject&body=$body');
+      try {
+        await launchUrl(mailUri);
+      } catch (_) {}
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Report submitted — thank you!'),
+              backgroundColor: AppColors.success),
+        );
+        _descriptionController.clear();
+        setState(() => _reportType = 'Bug');
+      }
     }
   }
 

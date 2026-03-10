@@ -49,7 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.primaryDark, AppColors.primary],
+          colors: [
+            Color(0xFF7A0A2E),
+            Color(0xFFC90F47),
+            Color(0xFFE03060),
+          ],
+          stops: [0.0, 0.6, 1.0],
         ),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(32),
@@ -62,25 +67,42 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.fromLTRB(24, 20, 24, 28),
           child: Row(
             children: [
+              // App logo
+              Container(
+                width: 44,
+                height: 44,
+                margin: const EdgeInsets.only(right: 14),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.18),
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(13),
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'SAFEHER',
+                      'SAFELY',
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.65),
+                        color: Colors.white.withOpacity(0.7),
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 2.5,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: 4),
                     const Text(
                       'Stay Protected, Always',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 26,
+                        fontSize: 22,
                         fontWeight: FontWeight.w700,
                         letterSpacing: -0.3,
                       ),
@@ -88,6 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+              // Notification button
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.15),
@@ -121,7 +144,6 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(
             fontSize: 13,
             color: AppColors.textSecondary,
-            fontWeight: FontWeight.w400,
           ),
         ),
       ],
@@ -147,10 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
           physics: const NeverScrollableScrollPhysics(),
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
-          childAspectRatio: 1.15,
+          childAspectRatio: 1.05,
           children: [
             _QuickActionCard(
-              icon: Icons.location_on_rounded,
+              icon: Icons.my_location_rounded,
               label: 'Share Location',
               subtitle: 'Send GPS coordinates',
               color: const Color(0xFF1565C0),
@@ -158,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () => _locationService.shareLocation(context),
             ),
             _QuickActionCard(
-              icon: Icons.phone_in_talk_rounded,
+              icon: Icons.phone_callback_rounded,
               label: 'Fake Call',
               subtitle: 'Simulate incoming call',
               color: const Color(0xFF2E7D32),
@@ -169,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             _QuickActionCard(
-              icon: Icons.timer_rounded,
+              icon: Icons.directions_walk_rounded,
               label: 'Safe Walk',
               subtitle: 'Auto-alert countdown',
               color: const Color(0xFFBF360C),
@@ -180,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             _QuickActionCard(
-              icon: Icons.local_phone_rounded,
+              icon: Icons.emergency_rounded,
               label: 'Hotlines',
               subtitle: 'Emergency numbers',
               color: AppColors.primary,
@@ -235,19 +257,29 @@ class _QuickActionCard extends StatelessWidget {
             ],
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Icon with colored shadow
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: bgColor,
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: color.withOpacity(0.22),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-                child: Icon(icon, color: color, size: 22),
+                child: Icon(icon, color: color, size: 24),
               ),
-              const Spacer(),
+              const SizedBox(height: 12),
               Text(
                 label,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -257,6 +289,7 @@ class _QuickActionCard extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 subtitle,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 11,
                   color: AppColors.textSecondary,

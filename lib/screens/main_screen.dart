@@ -39,9 +39,9 @@ class _MainScreenState extends State<MainScreen> {
       label: 'Tips',
     ),
     _NavItem(
-      icon: Icons.person_outline_rounded,
-      activeIcon: Icons.person_rounded,
-      label: 'Profile',
+      icon: Icons.more_horiz,
+      activeIcon: Icons.more_horiz,
+      label: 'More',
     ),
   ];
 

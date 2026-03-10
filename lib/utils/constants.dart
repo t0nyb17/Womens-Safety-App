@@ -3,7 +3,7 @@ class AppConstants {
   static const String emergencyNumber = '9321245XXX';
   
   // App info
-  static const String appVersion = '1.0.0';
+  static const String appVersion = '2.0';
   static const String developerName = 'Tanmay Bangar';
   static const String githubUrl = 'https://github.com/t0nyb17';
   
